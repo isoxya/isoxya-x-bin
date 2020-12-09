@@ -1,0 +1,71 @@
+#!/bin/bash -eu
+set -o pipefail
+
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
+
+file_ext=.yml
+sig_ext=.sha256.sig.base64
+#-------------------------------------------------------------------------------
+function clean() {
+    rm -rf "$tmp"
+}
+
+trap clean EXIT
+#-------------------------------------------------------------------------------
+ask "id.name" "Example Ltd"
+id_name=$ASK_BUF
+
+ask "id.country" "GB"
+id_country=$ASK_BUF
+
+ask "id.number" null
+id_number_=$ASK_BUF
+
+case $id_number_ in
+    null)
+        id_number=null
+        ;;
+    *)
+        id_number="\"$id_number_\""
+        ;;
+esac
+
+ask "t.ins" "$(date -Iseconds)"
+t_ins=$(date -Iseconds -d "$ASK_BUF")
+
+ask "t.exp_" "1 day"
+t_exp_=$ASK_BUF
+
+ask "t.exp" "$(date -Iseconds -d "$t_ins $t_exp_")"
+t_exp=$(date -Iseconds -d "$ASK_BUF")
+#-------------------------------------------------------------------------------
+y=$(cat <<-EOT
+	id:
+	  name: "$id_name"
+	  country: "$id_country"
+	  number: $id_number
+	t_ins: "$t_ins"
+	t_exp: "$t_exp"
+	EOT
+    )
+#-------------------------------------------------------------------------------
+echo "$y"
+#-------------------------------------------------------------------------------
+ask "file [$file_ext]" license
+file_=$ASK_BUF
+
+file="$file_$file_ext"
+#-------------------------------------------------------------------------------
+tmp=$(mktemp -d)
+
+echo "$y" > "$tmp/$file"
+
+# use RSA key to sign a SHA-256 hash of the payload
+perl -pe 'chomp if eof' < "$tmp/$file" |
+    openssl dgst -sha256 -sign "$KEY_PRI_PEM" |
+    base64 -w0 \
+    > "$tmp/$file$sig_ext"
+
+echo "$y" > "$file"
+echo "# $(cat "$tmp/$file$sig_ext")" >> "$file"
+#-------------------------------------------------------------------------------
