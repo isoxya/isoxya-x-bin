@@ -1,0 +1,36 @@
+#!/bin/bash -eu
+set -o pipefail
+
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
+#-------------------------------------------------------------------------------
+ask "org.href" "${ORG_HREF:-}"
+org_href=$ASK_BUF
+#-------------------------------------------------------------------------------
+ask "url" http://spellchecker.plugin.dev.isoxya.com:8000/data
+url=$ASK_BUF
+
+ask "tag" spellchecker
+tag=$ASK_BUF
+
+ask "pub" null
+pub=$ASK_BUF
+
+ask "chans" null
+chans=$ASK_BUF
+#-------------------------------------------------------------------------------
+j=$(cat <<-EOT
+	{
+	  "url": "$url",
+	  "tag": "$tag",
+	  "pub": $pub,
+	  "chans": $chans
+	}
+	EOT
+    )
+
+p=$(
+    curla -X POST -d "$j" "$ENDPOINT_URL$org_href/plug_strm"
+)
+echo "$p" | jq
+echo "$p" | jq -r '.href' | grep -v 'null' >> "$PLUG_STRM_HREF_"
+#-------------------------------------------------------------------------------

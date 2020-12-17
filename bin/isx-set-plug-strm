@@ -1,19 +1,11 @@
 #!/bin/bash -eu
 set -o pipefail
 
-href_=${1:-}
-
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
 #-------------------------------------------------------------------------------
-if [ -z "$href_" ]; then
-    ask_opts "href" 0 \
-        "${ORG_HREF:-}" \
-        "${PLUG_PROC_HREF:-}" \
-        "${PLUG_STRM_HREF:-}"
-    href=$ASK_BUF
-else
-    href=$href_
-fi
+ask "plug_strm.href" /plug_strm/1b3ab08c-4691-48a5-a4d0-cd3bf8399661
+echo "$ASK_BUF" > "$PLUG_STRM_HREF_"
+reload_vars
 #-------------------------------------------------------------------------------
-curla "$ENDPOINT_URL$href" | jq
+"$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/isx-read" "$PLUG_STRM_HREF"
 #-------------------------------------------------------------------------------
