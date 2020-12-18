@@ -1,21 +1,29 @@
 #!/bin/bash -eu
 set -o pipefail
 
-href_=${1:-}
-
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
 #-------------------------------------------------------------------------------
-if [ -z "$href_" ]; then
-    ask_opts "href" 0 \
-        "${ORG_HREF:-}" \
-        "${PLUG_PROC_HREF:-}" \
-        "${PLUG_STRM_HREF:-}" \
-        "${SITE_HREF:-}" \
-        "${UAGENT_HREF:-}"
-    href=$ASK_BUF
-else
-    href=$href_
-fi
+ask "url" http://example.com
+url=$ASK_BUF
+
+ask "rate_lim" null
+rate_lim=$ASK_BUF
+
+ask "chans" null
+chans=$ASK_BUF
 #-------------------------------------------------------------------------------
-curla "$ENDPOINT_URL$href" | jq
+j=$(cat <<-EOT
+	{
+	  "url": "$url",
+	  "rate_lim": $rate_lim,
+	  "chans": $chans
+	}
+	EOT
+    )
+
+p=$(
+    curla -X POST -d "$j" "$ENDPOINT_URL/site"
+)
+echo "$p" | jq
+echo "$p" | jq -r '.href' | grep -v 'null' >> "$SITE_HREF_"
 #-------------------------------------------------------------------------------
