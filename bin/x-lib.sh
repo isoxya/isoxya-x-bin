@@ -80,4 +80,5 @@ cache_var ENDPOINT_URL
 cache_var ORG_HREF
 cache_var PLUG_PROC_HREF "${ORG_HREF:-}"
 cache_var PLUG_STRM_HREF "${ORG_HREF:-}"
+cache_var UAGENT_HREF "${ORG_HREF:-}"
 #-------------------------------------------------------------------------------
