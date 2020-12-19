@@ -25,16 +25,16 @@ l=$(
 )
 echo "$l" | jq
 echo "$l" | jq -r '.href' | grep -v 'null' >> "$LIST_HREF_"
-#reload_vars
+reload_vars
 #-------------------------------------------------------------------------------
-#j=$(cat <<-EOT
-#	{
-#	  "url": [$j_urls]
-#	}
-#	EOT
-#    )
-#
-#curla -X POST -d "$j" "$ENDPOINT_URL$LIST_HREF/list_page" | jq
-#
-#curla "$ENDPOINT_URL$LIST_HREF" | jq
+j=$(cat <<-EOT
+	{
+	  "url": [$j_urls]
+	}
+	EOT
+    )
+
+curla -X POST -d "$j" "$ENDPOINT_URL$LIST_HREF/list_page" | jq
+
+curla "$ENDPOINT_URL$LIST_HREF" | jq
 #-------------------------------------------------------------------------------
