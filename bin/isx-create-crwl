@@ -1,0 +1,82 @@
+#!/bin/bash -eu
+set -o pipefail
+
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
+#-------------------------------------------------------------------------------
+ask "site.href" "${SITE_HREF:-}"
+site_href=$ASK_BUF
+#-------------------------------------------------------------------------------
+ask "org.href" "${ORG_HREF:-}"
+org_href=$ASK_BUF
+#-------------------------------------------------------------------------------
+ask "pages_max" null
+pages_max=$ASK_BUF
+
+ask "depth_max" null
+depth_max=$ASK_BUF
+
+ask "uagent.href" "${UAGENT_HREF:-}"
+uagent_href=$ASK_BUF
+
+ask_opts "list.href" 0 null "${LIST_HREF:-}"
+list_href=$ASK_BUF
+
+case $list_href in
+    null)
+        list=null
+        ;;
+    *)
+        list=$(cat <<-EOT
+	  {
+	    "href": "$list_href"
+	  }
+	EOT
+        )
+        ;;
+esac
+
+ask "validate_ext" false
+validate_ext=$ASK_BUF
+
+ask "plug_proc.href" "${PLUG_PROC_HREF:-}"
+plug_proc_href=$ASK_BUF
+
+ask "plug_strm.href" "${PLUG_STRM_HREF:-}"
+plug_strm_href=$ASK_BUF
+
+ask "plug_proc_conf" null
+plug_proc_conf=$ASK_BUF
+#-------------------------------------------------------------------------------
+j=$(cat <<-EOT
+	{
+	  "pages_max": $pages_max,
+	  "depth_max": $depth_max,
+	  "uagent": {
+	    "href": "$uagent_href"
+	  },
+	  "list": $list,
+	  "validate_ext": $validate_ext,
+	  "org": {
+	    "href": "$org_href"
+	  },
+	  "plug_proc_conf": $plug_proc_conf,
+	  "plug_proc": [
+	    {
+	        "href": "$plug_proc_href"
+	    }
+	  ],
+	  "plug_strm": [
+	    {
+	        "href": "$plug_strm_href"
+	    }
+	  ]
+	}
+	EOT
+    )
+
+c=$(
+    curla -X POST -d "$j" "$ENDPOINT_URL$site_href/crwl"
+)
+echo "$c" | jq
+echo "$c" | jq -r '.href' | grep -v 'null' >> "$CRWL_HREF_"
+#-------------------------------------------------------------------------------

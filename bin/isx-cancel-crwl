@@ -6,20 +6,20 @@ href_=${1:-}
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
 #-------------------------------------------------------------------------------
 if [ -z "$href_" ]; then
-    ask_opts "href" 0 \
-        "${ORG_HREF:-}" \
-        \
-        "${CRWL_HREF:-}" \
-        "${LIST_HREF:-}" \
-        "${SITE_HREF:-}" \
-        \
-        "${PLUG_PROC_HREF:-}" \
-        "${PLUG_STRM_HREF:-}" \
-        "${UAGENT_HREF:-}"
+    ask "href" null
     href=$ASK_BUF
 else
     href=$href_
 fi
+#-------------------------------------------------------------------------------
+j=$(cat <<-EOT
+	{
+	  "status": "canceled"
+	}
+	EOT
+    )
+
+curla -X PATCH -d "$j" "$ENDPOINT_URL$href" | jq
 #-------------------------------------------------------------------------------
 curla "$ENDPOINT_URL$href" | jq
 #-------------------------------------------------------------------------------
