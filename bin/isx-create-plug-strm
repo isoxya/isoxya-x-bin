@@ -6,10 +6,10 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
 ask "org.href" "${ORG_HREF:-}"
 org_href=$ASK_BUF
 #-------------------------------------------------------------------------------
-ask "url" http://spellchecker.plugin.dev.isoxya.com:8000/data
+ask "url" http://elasticsearch.plugin.dev.isoxya.com:8000/data
 url=$ASK_BUF
 
-ask "tag" spellchecker
+ask "tag" elasticsearch
 tag=$ASK_BUF
 
 ask "pub" null
