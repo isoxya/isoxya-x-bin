@@ -5,10 +5,18 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
 
 file_ext=.yml
 #-------------------------------------------------------------------------------
+ask "auto_stop_inactive_freq" 300
+auto_stop_inactive_freq=$ASK_BUF
+
+ask "auto_validate_ext_freq" 300
+auto_validate_ext_freq=$ASK_BUF
+
 ask "msg_prefetch" 1
 msg_prefetch=$ASK_BUF
 #-------------------------------------------------------------------------------
 y=$(cat <<-EOT
+	auto_stop_inactive_freq: $auto_stop_inactive_freq
+	auto_validate_ext_freq: $auto_validate_ext_freq
 	msg_prefetch: $msg_prefetch
 	EOT
     )
