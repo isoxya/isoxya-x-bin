@@ -1,0 +1,28 @@
+#!/bin/bash -eu
+set -o pipefail
+
+source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
+#-------------------------------------------------------------------------------
+ask "org.href" "${ORG_HREF:-}"
+org_href=$ASK_BUF
+#-------------------------------------------------------------------------------
+ask "str" 'Isoxya/${VERSION} (+https://www.isoxya.com/)'
+str=$ASK_BUF
+
+ask "pub" null
+pub=$ASK_BUF
+#-------------------------------------------------------------------------------
+j=$(cat <<-EOT
+	{
+	  "str": "$str",
+	  "pub": $pub
+	}
+	EOT
+    )
+
+p=$(
+    curla -X POST -d "$j" "$ENDPOINT_URL$org_href/user_agent"
+)
+echo "$p" | jq
+echo "$p" | jq -r '.href' | grep -v 'null' >> "$USER_AGENT_HREF_"
+#-------------------------------------------------------------------------------

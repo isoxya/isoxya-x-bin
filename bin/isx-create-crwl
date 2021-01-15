@@ -6,17 +6,14 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
 ask "site.href" "${SITE_HREF:-}"
 site_href=$ASK_BUF
 #-------------------------------------------------------------------------------
-ask "org.href" "${ORG_HREF:-}"
-org_href=$ASK_BUF
-#-------------------------------------------------------------------------------
 ask "pages_max" null
 pages_max=$ASK_BUF
 
 ask "depth_max" null
 depth_max=$ASK_BUF
 
-ask "uagent.href" "${UAGENT_HREF:-}"
-uagent_href=$ASK_BUF
+ask "user_agent.href" "${USER_AGENT_HREF:-}"
+user_agent_href=$ASK_BUF
 
 ask_opts "list.href" 0 null "${LIST_HREF:-}"
 list_href=$ASK_BUF
@@ -35,24 +32,27 @@ case $list_href in
         ;;
 esac
 
-ask "validate_ext" false
+ask "validate_ext" null
 validate_ext=$ASK_BUF
+
+ask "org.href" "${ORG_HREF:-}"
+org_href=$ASK_BUF
+
+ask "plug_proc_conf" null
+plug_proc_conf=$ASK_BUF
 
 ask "plug_proc.href" "${PLUG_PROC_HREF:-}"
 plug_proc_href=$ASK_BUF
 
 ask "plug_strm.href" "${PLUG_STRM_HREF:-}"
 plug_strm_href=$ASK_BUF
-
-ask "plug_proc_conf" null
-plug_proc_conf=$ASK_BUF
 #-------------------------------------------------------------------------------
 j=$(cat <<-EOT
 	{
 	  "pages_max": $pages_max,
 	  "depth_max": $depth_max,
-	  "uagent": {
-	    "href": "$uagent_href"
+	  "user_agent": {
+	    "href": "$user_agent_href"
 	  },
 	  "list": $list,
 	  "validate_ext": $validate_ext,

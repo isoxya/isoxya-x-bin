@@ -1,12 +1,11 @@
 #!/bin/bash -eu
 set -o pipefail
 
-q=${1:-}
-
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
 #-------------------------------------------------------------------------------
-ask "org.href" "${ORG_HREF:-}"
-org_href=$ASK_BUF
+ask "user_agent.href" /user_agent/a5614ba4-c1ec-4abb-b2fe-a0fc23855495
+echo "$ASK_BUF" > "$USER_AGENT_HREF_"
+reload_vars
 #-------------------------------------------------------------------------------
-curla -f "$ENDPOINT_URL$org_href/uagent?$q" | jq
+"$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/isx-read" "$USER_AGENT_HREF"
 #-------------------------------------------------------------------------------

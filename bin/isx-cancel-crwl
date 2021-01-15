@@ -6,7 +6,7 @@ href_=${1:-}
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
 #-------------------------------------------------------------------------------
 if [ -z "$href_" ]; then
-    ask "href" null
+    ask "href" "${CRWL_HREF:-}"
     href=$ASK_BUF
 else
     href=$href_
