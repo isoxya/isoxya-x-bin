@@ -3,7 +3,7 @@ set -o pipefail
 
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
 #-------------------------------------------------------------------------------
-ask "plug_proc.href" /plug_proc/a956b620-4863-4949-ab06-e4e0bf97407c
+ask "plug_proc.href" "/plug_proc/$(uuidgen)"
 echo "$ASK_BUF" > "$PLUG_PROC_HREF_"
 reload_vars
 #-------------------------------------------------------------------------------

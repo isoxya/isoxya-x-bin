@@ -3,7 +3,7 @@ set -o pipefail
 
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
 #-------------------------------------------------------------------------------
-ask "plug_strm.href" /plug_strm/1b3ab08c-4691-48a5-a4d0-cd3bf8399661
+ask "plug_strm.href" "/plug_strm/$(uuidgen)"
 echo "$ASK_BUF" > "$PLUG_STRM_HREF_"
 reload_vars
 #-------------------------------------------------------------------------------

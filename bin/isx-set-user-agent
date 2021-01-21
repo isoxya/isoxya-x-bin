@@ -3,7 +3,7 @@ set -o pipefail
 
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
 #-------------------------------------------------------------------------------
-ask "user_agent.href" /user_agent/a5614ba4-c1ec-4abb-b2fe-a0fc23855495
+ask "user_agent.href" "/user_agent/$(uuidgen)"
 echo "$ASK_BUF" > "$USER_AGENT_HREF_"
 reload_vars
 #-------------------------------------------------------------------------------
