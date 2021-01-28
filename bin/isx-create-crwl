@@ -41,11 +41,11 @@ org_href=$ASK_BUF
 ask "plug_proc_conf" null
 plug_proc_conf=$ASK_BUF
 
-ask "plug_proc.href" "${PLUG_PROC_HREF:-}"
-plug_proc_href=$ASK_BUF
+ask "plug_proc.hrefs" "${PLUG_PROC_HREF:-}"
+j_plug_proc=$(echo "$ASK_BUF" | tr ' ' '\n' | xargs -I {} echo '{"href": "{}"},' | sed '$ s/.$//' | tr '\n' ' ')
 
-ask "plug_strm.href" "${PLUG_STRM_HREF:-}"
-plug_strm_href=$ASK_BUF
+ask "plug_strm.hrefs" "${PLUG_STRM_HREF:-}"
+j_plug_strm=$(echo "$ASK_BUF" | tr ' ' '\n' | xargs -I {} echo '{"href": "{}"},' | sed '$ s/.$//' | tr '\n' ' ')
 #-------------------------------------------------------------------------------
 j=$(cat <<-EOT
 	{
@@ -60,16 +60,8 @@ j=$(cat <<-EOT
 	    "href": "$org_href"
 	  },
 	  "plug_proc_conf": $plug_proc_conf,
-	  "plug_proc": [
-	    {
-	        "href": "$plug_proc_href"
-	    }
-	  ],
-	  "plug_strm": [
-	    {
-	        "href": "$plug_strm_href"
-	    }
-	  ]
+	  "plug_proc": [$j_plug_proc],
+	  "plug_strm": [$j_plug_strm]
 	}
 	EOT
     )
