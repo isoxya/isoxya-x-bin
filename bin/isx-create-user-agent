@@ -6,7 +6,7 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
 ask "org.href" "${ORG_HREF:-}"
 org_href=$ASK_BUF
 #-------------------------------------------------------------------------------
-ask "str" 'IsoxyaPE/${VERSION} (+https://www.isoxya.com/)'
+ask "str" 'Isoxya/${VERSION} (+https://www.isoxya.com/)'
 str=$ASK_BUF
 
 ask "pub" null
