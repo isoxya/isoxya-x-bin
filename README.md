@@ -5,11 +5,6 @@
 Also see the [Tigrosa x Bin Scripts](https://github.com/tiredpixel/tigrosa-x-bin), a collection of scripts for [Tigrosa](https://docs.tigrosa.tiredpixel.com/#tigrosa) authentication proxy, on top of which these scripts build.
 
 
-## Blessing
-
-May you find peace, and help others to do likewise.
-
-
 ## Contact
 
 [tiredpixel.com](https://www.tiredpixel.com/) · [tp@tiredpixel.com](mailto:tp@tiredpixel.com)
