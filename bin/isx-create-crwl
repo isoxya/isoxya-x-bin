@@ -2,20 +2,22 @@
 set -o pipefail
 
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
+
+echo -e "Isoxya CE/PE\n"
 #-------------------------------------------------------------------------------
-ask "site.href" "${SITE_HREF:-}"
+ask "site.href (CE/PE)" "${SITE_HREF:-}"
 site_href=$ASK_BUF
 #-------------------------------------------------------------------------------
-ask "pages_max" null
+ask "pages_max (PE)" null
 pages_max=$ASK_BUF
 
-ask "depth_max" null
+ask "depth_max (PE)" null
 depth_max=$ASK_BUF
 
-ask "user_agent.href" "${USER_AGENT_HREF:-}"
+ask "user_agent.href (PE)" "${USER_AGENT_HREF:-}"
 user_agent_href=$ASK_BUF
 
-ask_opts "list.href" 0 null "${LIST_HREF:-}"
+ask_opts "list.href (PE)" 0 null "${LIST_HREF:-}"
 list_href=$ASK_BUF
 
 case $list_href in
@@ -32,19 +34,19 @@ case $list_href in
         ;;
 esac
 
-ask "validate_ext" null
+ask "validate_ext (PE)" null
 validate_ext=$ASK_BUF
 
-ask "org.href" "${ORG_HREF:-}"
+ask "org.href (PE)" "${ORG_HREF:-}"
 org_href=$ASK_BUF
 
-ask "plug_proc_conf" null
+ask "plug_proc_conf (CE/PE)" null
 plug_proc_conf=$ASK_BUF
 
-ask "plug_proc.hrefs" "${PLUG_PROC_HREF:-}"
+ask "plug_proc.hrefs (CE/PE)" "${PLUG_PROC_HREF:-}"
 j_plug_proc=$(echo "$ASK_BUF" | tr ' ' '\n' | xargs -I {} echo '{"href": "{}"},' | sed '$ s/.$//' | tr '\n' ' ')
 
-ask "plug_strm.hrefs" "${PLUG_STRM_HREF:-}"
+ask "plug_strm.hrefs (CE/PE)" "${PLUG_STRM_HREF:-}"
 j_plug_strm=$(echo "$ASK_BUF" | tr ' ' '\n' | xargs -I {} echo '{"href": "{}"},' | sed '$ s/.$//' | tr '\n' ' ')
 #-------------------------------------------------------------------------------
 j=$(cat <<-EOT

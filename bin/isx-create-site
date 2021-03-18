@@ -2,14 +2,16 @@
 set -o pipefail
 
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
+
+echo -e "Isoxya CE/PE\n"
 #-------------------------------------------------------------------------------
-ask "url" http://example.com
+ask "url (CE/PE)" http://example.com
 url=$ASK_BUF
 
-ask "rate_lim" null
+ask "rate_lim (PE)" null
 rate_lim=$ASK_BUF
 
-ask "chans" null
+ask "chans (PE)" null
 chans=$ASK_BUF
 #-------------------------------------------------------------------------------
 j=$(cat <<-EOT

@@ -5,6 +5,8 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
 
 file_ext=.yml
 sig_ext=.sha256.sig.base64
+
+echo -e "Isoxya PE\n"
 #-------------------------------------------------------------------------------
 function clean() {
     rm -rf "$tmp"
@@ -12,13 +14,13 @@ function clean() {
 
 trap clean EXIT
 #-------------------------------------------------------------------------------
-ask "id.name" "(dev)"
+ask "id.name (PE)" "(dev)"
 id_name=$ASK_BUF
 
-ask "id.country" "XX"
+ask "id.country (PE)" "XX"
 id_country=$ASK_BUF
 
-ask "id.number" null
+ask "id.number (PE)" null
 id_number_=$ASK_BUF
 
 case $id_number_ in
@@ -30,13 +32,13 @@ case $id_number_ in
         ;;
 esac
 
-ask "t.ins" "$(date -Iseconds)"
+ask "t.ins (PE)" "$(date -Iseconds)"
 t_ins=$(date -Iseconds -d "$ASK_BUF")
 
-ask "t.exp_" "1 day"
+ask "t.exp_ (PE)" "1 day"
 t_exp_=$ASK_BUF
 
-ask "t.exp" "$(date -Iseconds -d "$t_ins $t_exp_")"
+ask "t.exp (PE)" "$(date -Iseconds -d "$t_ins $t_exp_")"
 t_exp=$(date -Iseconds -d "$ASK_BUF")
 #-------------------------------------------------------------------------------
 y=$(cat <<-EOT
@@ -49,9 +51,9 @@ y=$(cat <<-EOT
 	EOT
     )
 #-------------------------------------------------------------------------------
-echo "$y"
+echo -e "\n$y\n"
 #-------------------------------------------------------------------------------
-ask "file [$file_ext]" license
+ask "file (PE) [$file_ext]" license
 file_=$ASK_BUF
 
 file="$file_$file_ext"

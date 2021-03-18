@@ -4,9 +4,11 @@ set -o pipefail
 href_=${1:-}
 
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
+
+echo -e "Isoxya CE/PE\n"
 #-------------------------------------------------------------------------------
 if [ -z "$href_" ]; then
-    ask_opts "href" 6 \
+    ask_opts "href (CE/PE)" 6 \
         "${ORG_HREF:-}" \
         \
         "${PLUG_PROC_HREF:-}" \

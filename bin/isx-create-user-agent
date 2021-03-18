@@ -2,14 +2,16 @@
 set -o pipefail
 
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
+
+echo -e "Isoxya PE\n"
 #-------------------------------------------------------------------------------
-ask "org.href" "${ORG_HREF:-}"
+ask "org.href (PE)" "${ORG_HREF:-}"
 org_href=$ASK_BUF
 #-------------------------------------------------------------------------------
-ask "str" 'Isoxya/${VERSION} (+https://www.isoxya.com/)'
+ask "str (PE)" 'Isoxya/${VERSION} (+https://www.isoxya.com/)'
 str=$ASK_BUF
 
-ask "pub" null
+ask "pub (PE)" null
 pub=$ASK_BUF
 #-------------------------------------------------------------------------------
 j=$(cat <<-EOT

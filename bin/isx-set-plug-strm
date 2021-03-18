@@ -2,8 +2,10 @@
 set -o pipefail
 
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
+
+echo -e "Isoxya CE/PE\n"
 #-------------------------------------------------------------------------------
-ask "plug_strm.href" "/plug_strm/$(uuidgen)"
+ask "plug_strm.href (CE/PE)" "/plug_strm/$(uuidgen)"
 echo "$ASK_BUF" > "$PLUG_STRM_HREF_"
 reload_vars
 #-------------------------------------------------------------------------------

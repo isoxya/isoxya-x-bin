@@ -2,20 +2,22 @@
 set -o pipefail
 
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
+
+echo -e "Isoxya CE/PE\n"
 #-------------------------------------------------------------------------------
-ask "org.href" "${ORG_HREF:-}"
+ask "org.href (PE)" "${ORG_HREF:-}"
 org_href=$ASK_BUF
 #-------------------------------------------------------------------------------
-ask "url" http://crawler-html.plugin.dev.isoxya.com:8000/data
+ask "url (CE/PE)" http://crawler-html.plugin.dev.isoxya.com:8000/data
 url=$ASK_BUF
 
-ask "tag" crawler-html
+ask "tag (CE/PE)" crawler-html
 tag=$ASK_BUF
 
-ask "pub" null
+ask "pub (PE)" null
 pub=$ASK_BUF
 
-ask "chans" null
+ask "chans (PE)" null
 chans=$ASK_BUF
 #-------------------------------------------------------------------------------
 j=$(cat <<-EOT

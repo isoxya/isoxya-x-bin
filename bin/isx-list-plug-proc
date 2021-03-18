@@ -4,8 +4,10 @@ set -o pipefail
 q=${1:-}
 
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
+
+echo -e "Isoxya CE/PE\n"
 #-------------------------------------------------------------------------------
-ask "org.href" "${ORG_HREF:-}"
+ask "org.href (PE)" "${ORG_HREF:-}"
 org_href=$ASK_BUF
 #-------------------------------------------------------------------------------
 curla -f "$ENDPOINT_URL$org_href/plug_proc?$q" | jq

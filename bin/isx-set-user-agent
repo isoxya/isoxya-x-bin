@@ -2,8 +2,10 @@
 set -o pipefail
 
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
+
+echo -e "Isoxya PE\n"
 #-------------------------------------------------------------------------------
-ask "user_agent.href" "/user_agent/$(uuidgen)"
+ask "user_agent.href (PE)" "/user_agent/$(uuidgen)"
 echo "$ASK_BUF" > "$USER_AGENT_HREF_"
 reload_vars
 #-------------------------------------------------------------------------------

@@ -4,8 +4,10 @@ set -o pipefail
 q=${1:-}
 
 source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/x-lib.sh"
+
+echo -e "Isoxya PE\n"
 #-------------------------------------------------------------------------------
-ask "crwl.href" "${CRWL_HREF:-}"
+ask "crwl.href (PE)" "${CRWL_HREF:-}"
 crwl_href=$ASK_BUF
 #-------------------------------------------------------------------------------
 curla -f "$ENDPOINT_URL$crwl_href/crwl?$q" | jq
