@@ -7,6 +7,24 @@ Also see [Isoxya web crawler Community Edition](https://github.com/isoxya/isoxya
 Also see the [Tigrosa Scripts](https://github.com/tiredpixel/tigrosa-x-bin), a collection of scripts for [Tigrosa](https://docs.tigrosa.tiredpixel.com/#tigrosa) auth proxy, on top of which these scripts build.
 
 
+## Dependencies
+
+- [jq](https://stedolan.github.io/jq/)
+- [Tigrosa Scripts](https://github.com/tiredpixel/tigrosa-x-bin)
+
+
+## Installation
+
+These scripts are provided by way of example, but are also suitable for controlling the API via a CLI even in production. The repository can be cloned somewhere, and included in your PATH when required (or permanently in your `$HOME/.bash_profile`).
+
+```sh
+cd $HOME
+git clone git@github.com:tiredpixel/isoxya-x-bin.git
+
+PATH=$PATH:$HOME/isoxya-x-bin/bin
+```
+
+
 ## Contact
 
 [en@isoxya.com](mailto:en@isoxya.com) · [isoxya.com](https://www.isoxya.com/)
